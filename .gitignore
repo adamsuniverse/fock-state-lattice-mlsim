@@ -1,0 +1,9 @@
+.DS_Store
+*.pyc
+*.npy
+.idea/
+logs/
+__pycache__/
+.venv/
+sklearn-env/
+
