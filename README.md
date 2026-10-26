@@ -390,5 +390,5 @@ The number of iterations that run within cavity three is set to 20. This was onl
 * **[Deep Learning (Adaptive Computation and Machine Learning series)](https://www.deeplearningbook.org/contents/mlp.html)** - I. Goodfellow, Y. Bengio, A. Courville
 * **[Geometric Pyramid Rule](https://machinelearningtheory.org/docs/Deep-Learning/designing-the-architecture/)** - Professor Yi He (references T. Masters below)
 * **[Geometric Pyramid Rule](https://www.sciencedirect.com/book/monograph/9780080514338/practical-neural-network-recipies-in-c-and-and)** - T. Masters
-* **[Introduction to Neural Networks with Java]([https://books.google.co.uk/books?id=Swlcw7M4uD8C&printsec=frontcover&redir_esc=y#v=onepage&q&f=false])** - J. Heaton
+* **[Introduction to Neural Networks with Java](https://books.google.co.uk/books?id=Swlcw7M4uD8C&printsec=frontcover&redir_esc=y#v=onepage&q&f=false)** - J. Heaton
 * **[Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)** - M. Neilson
