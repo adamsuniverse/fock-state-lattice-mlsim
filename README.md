@@ -6,8 +6,8 @@
 
 Quantum optical sensors offer far greater sensitivity than their classical counterparts, by leveraging quantum entanglement to overcome the Standard Quantum Limit. 
 This research presents a computational simulation designed with Python QuTiP to model and validate the construction of a physical Fock state lattice sensor. 
-The sensor consists of a three cavity optical lattice initialised in a specific Fock State and coupled with evanescent coupling. 
-As photons migrate between the cavities they are entangled due to the beam splitters, and interact with a Kerr non-linear material within each cavity. 
+The sensor consists of a three cavity optical lattice initialised in a specific Fock state and coupled with evanescent coupling. 
+As photons migrate between the cavities they are entangled due to the coupling, and interact with a Kerr non-linear material within each cavity. 
 The physical experiment also has a mechanical mirror within the third cavity, which when moved due to perturbations, changes the resonant frequency of the cavity, detuning it from resonance.
 In order to measure this without destroying the quantum state, a fourth cavity is arranged perpendicular to the third, and connected with a cross-Kerr non-linear material. 
 When photons are present within the third cavity, they interact with the cross-Kerr, causing a phase shift within the fourth cavity that is then measured. 
@@ -24,15 +24,16 @@ A reduced three cavity setup was also simulated, to validate the measurement cal
 The aim of the Four Cavity Simulation is the full end-to-end simulation of the physical setup as described in previous sections. 
 It models the connected three cavity system where the third cavity is connected to a fourth via a cross-Kerr interaction. 
 This is to validate the end-to-end concept including the ability to extract the quadrature components and find the optimal operating conditions i.e. the driving pulse, $\theta$, the decay rate and the effective Kraus operator $\Upsilon(m)$. 
-This enables the simulated measurement outcome $m$ to be obtained from the heterodyne readout.
+This enables the simulated measurement outcome $m$ to be obtained from the heterodyne readout. 
+Cavity Four can then be disabled allowing the simulation to use the effective Kraus operator description together with the measurement outcome $(m)$.
 
 ### Three Cavity Simulator
 
 The aim of the Three Cavity Simulation is to validate the probabilities of $P(m)$ through the effective measurement model. 
-The measurement probability distribution $P(m)$ is used as the machine learning input, while the cavity three photon number distribution $P(n)_{pre}$ and $P(n)_{post}$ extracted from the simulated density matrix are used as the supervised prediction targets. 
+The measurement probability distribution $P(m)$ is used as the machine learning input, while the cavity three photon number distribution <i>P(n)</i><sub><i>pre</i></sub> and <i>P(n)</i><sub><i>post</i></sub> extracted from the simulated density matrix are used as the supervised prediction targets. 
 The models are therefore trained to infer the underlying photon number distribution $P(n)$ from the measurement distribution $P(m)$, providing a predictive framework for future use. 
 In addition, the simulation will validate the effective Kraus operator description of the QND measurement. 
-Cavity Four can then be disabled allowing the simulation to use the effective Kraus operator description together with the measurement outcome $(m)$.
+
 
 ---
 
@@ -54,6 +55,8 @@ matplotlib >= 3.11.1
 
 pandas >= 3.0.5
 
+tqdm >= 4.70.0
+
 ---
 
 ## How to Run
@@ -61,7 +64,7 @@ As can be seen from the method map everything is run via main.py.
 
 git clone https://github.com/adamsuniverse/fock-state-lattice-mlsim
 
-cd fock-state-lattice-mlsim 
+cd fsl_qnd_ml_sim
 
 Create a virtual environment
 
@@ -70,6 +73,10 @@ python3 -m venv cav-env
 \#Activate it
 
 source cav-env/bin/activate
+
+\# Create the log directory as I forgot to code it.
+
+mkdir ./logs/
 
 \# Install the required dependencies 
 
@@ -91,8 +98,20 @@ With the exception of three sub-module functions, which call other local functio
 
 ---
 
+# Release Notes
 
-# Config Considerations
+v1.0.0  - This Production Release.
+
+New Development Features:
+* Fix issues in README.md for the text corrections and installs - DONE. 
+* Refactor and make more efficient
+* Cut the detune sweep for positive values for Calibration ML
+* Look at PyTorch and GRU/LSTM for measurement M
+* Look at unconditional update implementation to go faster.
+
+---
+
+# Config Considerations For v1.0.0
 
 #### For the Main (main.py):
 
@@ -139,9 +158,7 @@ The number of iterations that run within cavity three is set to 20. This was onl
 ### General Points
 - Note in main the graphing of the large n and p_m plots. I've set a limit of 50 iterations before this stops graphing those. Once it gets suitably large it does throw errors and 50 has been deemed sufficient for these initial runs. We have also defaulted to graph per iteration rather than per time interval
 
-- Also note that the global seed value IS affected by whether the four cavity simulation runs or not. So if you see sudden changes in the calculated_m then it's probably due to this if you disabled the four cavity simulation previously.
-
-- Also also note that as theta is increased it affects the probability distribution of m, which in turn may get wider than m_max. Therefore a larger m_max is required, summing the probabilities calculating them will indicate if m_max=50 is too small.
+- Also note that as theta is increased it affects the probability distribution of m, which in turn may get wider than m_max. Therefore a larger m_max is required, summing the probabilities calculating them will indicate if m_max=50 is too small.
 
 ---
 
